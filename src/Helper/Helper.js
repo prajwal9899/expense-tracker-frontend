@@ -13,7 +13,7 @@ export function getSum(transaction, type) {
       };
     })
     .value();
-
+  
   var expenseSum = [];
   var savingsSum = [];
 
@@ -31,7 +31,7 @@ export function getSum(transaction, type) {
         return item.type === "Expense" || item.type === "Investment";
       })
       .map((item) => {
-        expenseSum.push(item.amount);
+        return expenseSum.push(item.amount);
       });
   }
 
