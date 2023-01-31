@@ -1,6 +1,7 @@
 import _ from "lodash";
 
 export function getSum(transaction, type) {
+  // console.log(transaction, "data");
   let sum = _(transaction)
     .groupBy("type")
     .map((obj, key) => {
@@ -13,7 +14,43 @@ export function getSum(transaction, type) {
     })
     .value();
 
-  // console.log(sum);
+  var expenseSum = [];
+  var savingsSum = [];
+
+  if (transaction !== undefined) {
+    transaction
+      .filter((item) => {
+        return item.type === "Savings";
+      })
+      .map((item) => {
+        return savingsSum.push(item.amount);
+      });
+
+    transaction
+      .filter((item) => {
+        return item.type === "Expense" || item.type === "Investment";
+      })
+      .map((item) => {
+        expenseSum.push(item.amount);
+      });
+  }
+
+  var savings = 0;
+  var expense = 0;
+
+  if (transaction !== undefined) {
+    for (let i = 0; i < expenseSum.length; i++) {
+      expense += expenseSum[i];
+    }
+
+    for (let i = 0; i < savingsSum.length; i++) {
+      savings += savingsSum[i];
+    }
+  }
+  let totalAmount = savings - expense;
+
+  console.log(totalAmount);
+
   return sum;
 }
 
